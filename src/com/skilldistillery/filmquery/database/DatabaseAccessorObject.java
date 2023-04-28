@@ -29,10 +29,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		Film film = null;
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			String sql = "SELECT * FROM film WHERE id = ?";
+			String sql = "SELECT film.* FROM film WHERE id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, fId);
-			System.out.println(stmt);
 			ResultSet filmResult = stmt.executeQuery();
 			if (filmResult.next()) {
 				int filmId = filmResult.getInt("id");
@@ -67,7 +66,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			// This will be the only class with SELECT statements
 			// need to update SELECT statement(S), likely more methods with more parameters
-			String sql = "SELECT * FROM actor WHERE id = ?";
+			String sql = "SELECT actor.* FROM actor WHERE id = ?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			// Assign bind statement'?' which is the only '1' in our SELECT to actorId
@@ -136,7 +135,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			String sql = "SELECT actor.* FROM actor JOIN film_actor ON actor.id = film_actor.actor_id WHERE film_id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-//			stmt.setInt(1, actorId);
+			stmt.setInt(1, filmId);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				int actorId = rs.getInt("id");

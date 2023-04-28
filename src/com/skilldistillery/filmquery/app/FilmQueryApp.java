@@ -18,33 +18,34 @@ public class FilmQueryApp {
 	}
 
 	private void test() {
-		Film film = db.findFilmById(2);
+		Film film = db.findFilmById(0);
 		if (film != null) {
 			System.out.println(film);
 		} else {
 			System.out.println("No film found for search.");
 		}
 
-//		Actor actor = db.findActorById(88);
-//		if (actor != null) {
-//			System.out.println(actor);
-//		} else {
-//			System.out.println("No actor found for search.");
-//		}
-//		
-//		List<Film> actorIdToFilm = db.findFilmsByActorId(1);
-//		if (actorIdToFilm != null) {
-//			System.out.println(actorIdToFilm);
-//		} else {
-//			System.out.println("No film found for search.");
-//		}
+		Actor actor = db.findActorById(0);
+		if (actor != null) {
+			System.out.println(actor);
+		} else {
+			System.out.println("No actor found for search.");
+		}
+		
+//		Update the list errors in case 0 or too large a number.
+		List<Film> actorIdToFilm = db.findFilmsByActorId(0);
+		if (actorIdToFilm != null) {
+			System.out.println(actorIdToFilm);
+		} else {
+			System.out.println("No film found for search.");
+		}
 			
-//		List<Actor> filmIdToActor = db.findActorsByFilmId(2);
-//		if (filmIdToActor != null) {
-//			System.out.println(filmIdToActor);
-//		} else {
-//			System.out.println("No actor found for search.");
-//		}
+		List<Actor> filmIdToActor = db.findActorsByFilmId(2);
+		if (filmIdToActor != null) {
+			System.out.println(filmIdToActor);
+		} else {
+			System.out.println("No actor found for search.");
+		}
 	}
 
 	private void launch() {

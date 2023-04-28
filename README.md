@@ -3,6 +3,7 @@
 # Description
 
 # Technologies Used
+ - Java
  - Eclipse
  - SQL
  - Git

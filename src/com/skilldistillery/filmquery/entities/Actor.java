@@ -18,7 +18,6 @@ public class Actor {
 	}
 
 	public Actor(int id, String firstName, String lastName) {
-		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
