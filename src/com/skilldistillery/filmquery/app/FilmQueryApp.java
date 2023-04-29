@@ -32,16 +32,15 @@ public class FilmQueryApp {
 			System.out.println("No actor found for search.");
 		}
 
-//		Update the list errors in case 0 or too large a number.
 		List<Film> actorIdToFilm = db.findFilmsByActorId(0);
-		if (actorIdToFilm != null) {
+		if (!actorIdToFilm.isEmpty()) {
 			System.out.println(actorIdToFilm);
 		} else {
 			System.out.println("No film found for search.");
 		}
 
-		List<Actor> filmIdToActor = db.findActorsByFilmId(2);
-		if (filmIdToActor != null) {
+		List<Actor> filmIdToActor = db.findActorsByFilmId(0);
+		if (!filmIdToActor.isEmpty()) {
 			System.out.println(filmIdToActor);
 		} else {
 			System.out.println("No actor found for search.");
@@ -65,7 +64,7 @@ public class FilmQueryApp {
 			input.nextLine();
 			switch(selection) {
 			case 1:
-				System.out.print("Enter film id: ");
+				System.out.print("\nEnter film id: ");
 				selection = input.nextInt();
 				input.nextLine();
 				Film film = db.findFilmById(selection);
@@ -79,7 +78,7 @@ public class FilmQueryApp {
 				break;
 			case 2:
 				Scanner sc = new Scanner(System.in);
-				System.out.print("Enter film keyword: ");
+				System.out.print("\nEnter film keyword: ");
 				keyword = sc.next();
 				sc.nextLine();
 				List<Film> word = db.findFilmByKeyword(keyword);
