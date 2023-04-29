@@ -9,5 +9,5 @@ public interface DatabaseAccessor {
 	Actor findActorById(int aId);
 	List<Actor> findActorsByFilmId(int filmId);
 	List<Film> findFilmsByActorId(int actorId);
-	Film findFilmByKeyword(String word);
+	List<Film> findFilmByKeyword(String word);
 }

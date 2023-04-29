@@ -154,9 +154,38 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public Film findFilmByKeyword(String word) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Film> findFilmByKeyword(String word) {
+		List<Film> films = new ArrayList<>();
+		try {
+			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			String sql = "SELECT film.* FROM film WHERE film.title LIKE ? OR film.description LIKE ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%"+word+"%");
+			stmt.setString(2, "%"+word+"%");
+			ResultSet filmResult = stmt.executeQuery();
+			while (filmResult.next()) {
+				int filmId = filmResult.getInt("id");
+				String title = filmResult.getString("title");
+				String desc = filmResult.getString("description");
+				int releaseYear = filmResult.getShort("release_year");
+				int langId = filmResult.getInt("language_id");
+				int rentDur = filmResult.getInt("rental_duration");
+				double rate = filmResult.getDouble("rental_rate");
+				int length = filmResult.getInt("length");
+				double repCost = filmResult.getDouble("replacement_cost");
+				String rating = filmResult.getString("rating");
+				String features = filmResult.getString("special_features");
+				Film film = new Film(filmId, title, desc, releaseYear, langId, rentDur, 
+						rate, length, repCost, rating, features);
+				films.add(film);
+			}
+			filmResult.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return films;
 	}
 
 }

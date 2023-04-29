@@ -58,6 +58,7 @@ public class FilmQueryApp {
 
 	private void startUserInterface(Scanner input) {
 		int selection;
+		String keyword;
 		menu();
 		do {
 			selection = input.nextInt();
@@ -74,16 +75,22 @@ public class FilmQueryApp {
 				} else {
 					System.out.println("No film found for search. \n");
 				}
-//				STILL THROWS ERRORS IF INPUT IS INVALID CHARACTERS OR NUMBER > INT RANGE
 				menu();
 				break;
 			case 2:
-//				UPDATE This for keyword search
+				Scanner sc = new Scanner(System.in);
 				System.out.print("Enter film keyword: ");
-				selection = input.nextInt();
-				input.nextLine();
-				System.out.println(db.findActorById(selection) + "\n");
-				db.findActorById(selection);
+				keyword = sc.next();
+				sc.nextLine();
+				List<Film> word = db.findFilmByKeyword(keyword);
+				if (!word.isEmpty()) {
+					for (Film film2 : word) {
+						System.out.println(film2.getTitle() + ", Released: " + film2.getReleaseYear() 
+						+ ", Rating: " + film2.getRating() + ", \n" + film2.getDesc() + "\n");						
+					}
+				} else {
+					System.out.println("No film found for search. \n");
+				}
 				menu();
 				break;
 			case 3:
