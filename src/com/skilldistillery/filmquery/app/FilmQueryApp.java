@@ -6,6 +6,7 @@ import com.skilldistillery.filmquery.database.DatabaseAccessor;
 import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
 import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
+import com.skilldistillery.filmquery.entities.Language;
 
 public class FilmQueryApp {
 
@@ -57,6 +58,7 @@ public class FilmQueryApp {
 
 	private void startUserInterface(Scanner input) {
 		int selection;
+		int internalSelection;
 		String keyword;
 		menu();
 		do {
@@ -65,12 +67,19 @@ public class FilmQueryApp {
 			switch(selection) {
 			case 1:
 				System.out.print("\nEnter film id: ");
-				selection = input.nextInt();
+				internalSelection = input.nextInt();
 				input.nextLine();
-				Film film = db.findFilmById(selection);
+				Film film = db.findFilmById(internalSelection);
+				Language language = db.findLanguage(internalSelection);
 				if (film != null) {
-					System.out.println(film.getTitle() + ", Released: " + film.getReleaseYear() 
-					+ ", Rating: " + film.getRating() + ", \n" + film.getDesc() + "\n");
+					System.out.print(film.getTitle() + ", Released: " + film.getReleaseYear() 
+					+ ", Rating: " + film.getRating() + ", Language: " + language.getName() + "\nActors: "); 
+					List<Actor> actors = film.getActors();
+					for (Actor actor : actors) {
+						System.out.print(actor + ", ");
+					}
+					System.out.println("\n" + film.getDesc());
+					System.out.println();
 				} else {
 					System.out.println("No film found for search. \n");
 				}
@@ -81,11 +90,19 @@ public class FilmQueryApp {
 				System.out.print("\nEnter film keyword: ");
 				keyword = sc.next();
 				sc.nextLine();
-				List<Film> word = db.findFilmByKeyword(keyword);
-				if (!word.isEmpty()) {
-					for (Film film2 : word) {
-						System.out.println(film2.getTitle() + ", Released: " + film2.getReleaseYear() 
-						+ ", Rating: " + film2.getRating() + ", \n" + film2.getDesc() + "\n");						
+				List<Film> filmWordSearch = db.findFilmByKeyword(keyword);
+				if (!filmWordSearch.isEmpty()) {
+					for (Film film2 : filmWordSearch) {
+						int id = film2.getFilmId();
+						Language lang = db.findLanguage(id);
+						System.out.print(film2.getTitle() + ", Released: " + film2.getReleaseYear() 
+						+ ", Rating: " + film2.getRating() + ", Language: " + lang.getName() + "\nActors: ");
+						List<Actor> actors = db.findActorsByFilmId(id);
+						for (Actor actor : actors) {
+							System.out.print(actor + ", ");
+						}
+						System.out.println("\n" + film2.getDesc());
+						System.out.println();
 					}
 				} else {
 					System.out.println("No film found for search. \n");
