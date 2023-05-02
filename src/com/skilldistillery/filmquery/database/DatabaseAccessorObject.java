@@ -62,15 +62,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	@Override
 	public Actor findActorById(int aId) {
 		Actor actor = null;
-		// may need more info here
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			// This will be the only class with SELECT statements
-			// need to update SELECT statement(S), likely more methods with more parameters
 			String sql = "SELECT actor.* FROM actor WHERE id = ?";
-
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			// Assign bind statement'?' which is the only '1' in our SELECT to actorId
 			stmt.setInt(1, aId);
 			ResultSet actorResult = stmt.executeQuery();
 			if (actorResult.next()) {
@@ -89,7 +84,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return actor;
 	}
 
-//	Will likely need to update this
 	@Override
 	public List<Film> findFilmsByActorId(int actorId) {
 		List<Film> films = new ArrayList<>();
