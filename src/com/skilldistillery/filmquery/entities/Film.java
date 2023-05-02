@@ -17,7 +17,6 @@ public class Film {
 	private String rating; 
 	private String features;
 	private List<Actor> actors;
-	private Language language;
 	
 	public Film() {}
 
@@ -35,6 +34,7 @@ public class Film {
 		this.rating = rating;
 		this.features = features;
 	}
+
 	
 	public int getFilmId() {
 		return filmId;
